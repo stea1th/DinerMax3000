@@ -9,5 +9,13 @@ namespace DinerMax3000.Business
     public class FoodMenu : Menu
     {
         public string HospitalDirections;
+        public string MenuType
+        {
+            get
+            {
+                return "FoodMenu";
+            }
+        }
+            
     }
 }

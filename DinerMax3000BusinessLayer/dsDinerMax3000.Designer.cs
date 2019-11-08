@@ -1824,11 +1824,21 @@ SELECT Id, Name, MenuType, Disclaimer, HospitalDirections FROM Menu WHERE (Id = 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT Id, Name, MenuType, Disclaimer, HospitalDirections FROM dbo.Menu";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "INSERT INTO [dbo].[Menu] ([Name], [MenuType], [Disclaimer], [HospitalDirections])" +
+                " VALUES (@Name, @MenuType, @Disclaimer, @HospitalDirections);\r\nSELECT Id, Name, " +
+                "MenuType, Disclaimer, HospitalDirections FROM Menu WHERE (Id = @@IDENTITY)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MenuType", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "MenuType", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Disclaimer", global::System.Data.SqlDbType.VarChar, 200, global::System.Data.ParameterDirection.Input, 0, 0, "Disclaimer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@HospitalDirections", global::System.Data.SqlDbType.VarChar, 200, global::System.Data.ParameterDirection.Input, 0, 0, "HospitalDirections", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2052,6 +2062,53 @@ SELECT Id, Name, MenuType, Disclaimer, HospitalDirections FROM Menu WHERE (Id = 
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string Name, string MenuType, string Disclaimer, string HospitalDirections, int Original_Id, string Original_Name, string Original_MenuType, string Original_Disclaimer, string Original_HospitalDirections) {
             return this.Update(Name, MenuType, Disclaimer, HospitalDirections, Original_Id, Original_Name, Original_MenuType, Original_Disclaimer, Original_HospitalDirections, Original_Id);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual int InsertMenu(string Name, string MenuType, string Disclaimer, string HospitalDirections) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((Name == null)) {
+                throw new global::System.ArgumentNullException("Name");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(Name));
+            }
+            if ((MenuType == null)) {
+                throw new global::System.ArgumentNullException("MenuType");
+            }
+            else {
+                command.Parameters[1].Value = ((string)(MenuType));
+            }
+            if ((Disclaimer == null)) {
+                throw new global::System.ArgumentNullException("Disclaimer");
+            }
+            else {
+                command.Parameters[2].Value = ((string)(Disclaimer));
+            }
+            if ((HospitalDirections == null)) {
+                throw new global::System.ArgumentNullException("HospitalDirections");
+            }
+            else {
+                command.Parameters[3].Value = ((string)(HospitalDirections));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
         }
     }
     

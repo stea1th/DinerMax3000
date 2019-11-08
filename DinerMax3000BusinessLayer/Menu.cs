@@ -10,13 +10,26 @@ namespace DinerMax3000.Business
 {
     public class Menu
     {
-        public string Name;
-        public List<MenuItem> items;
+        public string Name { get; set; }
+        public List<MenuItem> Items { get; set; }
+
+        private string _menuType = "Menu";
+        public string MenuType
+        {
+            get
+            {
+                return _menuType;
+            }
+            set
+            {
+                _menuType = value;
+            }
+        }
         private int _databaseId;
 
         public Menu()
         {
-            items = new List<MenuItem>();
+            Items = new List<MenuItem>();
         }
 
         public static List<Menu> GetAllMenus()
@@ -28,7 +41,8 @@ namespace DinerMax3000.Business
                     {
                         _databaseId = menuRow.Id,
                         Name = menuRow.Name,
-                        items = GetMenuItemsByMenuId(menuRow.Id)
+                        MenuType = menuRow.MenuType,
+                        Items = GetMenuItemsByMenuId(menuRow.Id)
                     }).ToList();
         }
 
@@ -53,6 +67,21 @@ namespace DinerMax3000.Business
             menuItemTableAdapter.InsertNewMenuItem(Name, Description, Price, _databaseId);
         }
 
+        public void SaveNewMenu()
+        {
+            MenuTableAdapter menuTableAdapter = new MenuTableAdapter();
+            if (this is FoodMenu)
+            {
+                FoodMenu foodMenu = (FoodMenu)this;
+                menuTableAdapter.InsertMenu(foodMenu.Name, foodMenu.MenuType, "", foodMenu.HospitalDirections);
+            }
+            else
+            {
+                DrinkMenu drinkMenu = (DrinkMenu)this;
+                menuTableAdapter.InsertMenu(drinkMenu.Name, drinkMenu.MenuType, drinkMenu.Disclaimer, "");
+            }
+        }
+
 
         public void AddMenuItem(string Title, string Description, double Price)
         {
@@ -62,7 +91,7 @@ namespace DinerMax3000.Business
                 Description = Description,
                 Price = Price
             };
-            items.Add(item);
+            Items.Add(item);
         }
     }
 }

@@ -9,5 +9,12 @@ namespace DinerMax3000.Business
     public class DrinkMenu : Menu
     {
         public string Disclaimer;
+        public string MenuType
+        {
+            get
+            {
+                return "DrinkMenu";
+            }
+        }
     }
 }

@@ -13,11 +13,32 @@ namespace DinerMaxConsole
         {
             //new Summ().Execute();
             List<Menu> allMenus = Menu.GetAllMenus();
-            Menu currentMenu = allMenus[0];
-            currentMenu.SaveNewMenuItem("Cordon Bleu", "mit Käse überbacken", 14.39);
+            allMenus.ForEach(menu =>
+           {
+               Console.WriteLine(menu.MenuType);
+               if (menu.MenuType.Equals("DrinkMenu"))
+               {
+                   menu.SaveNewMenuItem("Virgin Cubana", "without Alcohol", 7.89);
+                   menu.SaveNewMenuItem("B-52", "very strong alcohol", 12.39);
+               }
+               else
+               {
+                   menu.SaveNewMenuItem("Cordon Bleu", "mit Käse überbacken", 14.39);
+
+               }
+           });
+            //DrinkMenu drinkMenu = new DrinkMenu
+            //{
+            //    Name = "Coctails",
+            //    Disclaimer = "Dont drink and drive"
+            //};
+            //drinkMenu.SaveNewMenu();
+
+
+
 
             Order hungryGuestsOrder = new Order();
-            allMenus.ForEach(menu => menu.items.ForEach(item => hungryGuestsOrder.items.Add(item)));
+            allMenus.ForEach(menu => menu.Items.ForEach(item => hungryGuestsOrder.items.Add(item)));
             //summerMenu.items.ForEach(item => hungryGuestsOrder.items.Add(item));
             //foreach (MenuItem item in outsideDrinks.items)
             //{
