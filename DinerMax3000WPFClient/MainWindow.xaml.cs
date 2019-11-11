@@ -24,5 +24,24 @@ namespace DinerMax3000WPFClient
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DinerMax3000.WPFClient.DinerMax3000ViewModel currentViewModel =
+                 (DinerMax3000.WPFClient.DinerMax3000ViewModel)DataContext;
+            currentViewModel.NewMenuItems.ForEach(newMenuItem => currentViewModel.SelectedMenu.SaveNewMenuItem(newMenuItem.Title, newMenuItem.Description, newMenuItem.Price));
+            BindingOperations.GetBindingExpressionBase(cboAllMenus, ComboBox.ItemsSourceProperty).UpdateTarget();
+            
+        }
+
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.Row.Item is DinerMax3000.Business.MenuItem newMenuItem && e.EditAction == DataGridEditAction.Commit && e.Row.IsNewItem)
+            {
+                DinerMax3000.WPFClient.DinerMax3000ViewModel currentViewModel =
+                    (DinerMax3000.WPFClient.DinerMax3000ViewModel)DataContext;
+                currentViewModel.NewMenuItems.Add(newMenuItem);
+            }
+        }
     }
 }

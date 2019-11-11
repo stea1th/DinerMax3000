@@ -15,20 +15,10 @@
     </Window.DataContext>
     <Grid>
         <StackPanel>
-            <ComboBox ItemsSource="{Binding AllMenus}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMenu}"/>
-            <DataGrid ItemsSource="{Binding SelectedMenu.Items}"/>
+            <ComboBox Name="cboAllMenus" ItemsSource="{Binding AllMenus}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMenu}"/>
+            <DataGrid CanUserAddRows="True" ItemsSource="{Binding SelectedMenu.Items}" RowEditEnding="DataGrid_RowEditEnding"/>
             <Separator />
-            <WrapPanel>
-                <Label>Title:</Label>
-                <TextBox Width="150" Text="{Binding NewMenuItem.Title}"></TextBox>
-                
-                <Label>Price:</Label>
-                <TextBox Width="50" Text="{Binding NewMenuItem.Price}" ></TextBox>
-            </WrapPanel>
-            <Separator />
-            <Label>Description:</Label>
-            <TextBox Text="{Binding NewMenuItem.Description}"></TextBox>
-            
+            <Button Content="Save all new menu item" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Window>
